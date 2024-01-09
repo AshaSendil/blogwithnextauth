@@ -3,12 +3,10 @@ import React, { useState } from "react";
 import CommentModal from "./commentModal/page";
 import { FaRegComment } from "react-icons/fa";
 
-const dummyPreviousComment = {
-  author: "Previous Commenter",
-  content: "This is a dummy comment from a previous commenter.",
-};
 
-const CommentSection = () => {
+
+const CommentSection = (props) => {
+  console.log(props)
   const [comments, setComments] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPrevious,setIsPrevious] = useState(false)
@@ -42,6 +40,7 @@ const CommentSection = () => {
           isOpen={isModalOpen}
           onRequestClose={closeModal}
           onAddComment={handleAddComment}
+          getComment={getComment}
         />
       )}
 

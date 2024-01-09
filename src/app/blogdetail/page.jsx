@@ -1,26 +1,25 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FiBookmark, FiShare2 } from 'react-icons/fi';
 import CommentSection from '../commentsection/page';
+import axios from 'axios';
+import { useRouter } from 'next/router';
+import { useSearchParams } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import Header from '../components/header/page';
 
-// Mock data for demonstration
-const blogData = {
-  title: 'Sample Blog Title',
-  author: 'John Doe',
-  content: `
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Donec rutrum congue leo eget malesuada.
-    <p>
-      This is an example of a blog post content. It can include multiple paragraphs, images, and any HTML elements you need.
-    </p>
-    <p>
-      You can add more content here as needed.
-    </p>
-  `,
-  images: ['images/image1.jpg', ''],
-};
 
 const BlogDetail = (props) => {
+
+
+
   const [isBookmarked, setIsBookmarked] = useState(false);
+  // get it from query
+
+
+  const [apiPosts, setApiPosts] = useState([]);
+
+ 
 
   const listenToContent = () => {
     alert('Text-to-speech functionality will be implemented here.');
@@ -34,16 +33,36 @@ const BlogDetail = (props) => {
     setIsBookmarked((prev) => !prev);
   };
 
+
+  const searchParams = useSearchParams()
+  const search = searchParams.get('title');
+  const session = useSession()
+
+  const handleBlog = async () => {
+    const url = `api/write?title=${search}`
+    try {
+      axios.get(url).then((res) => setApiPosts(res?.data));
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+    }
+  };
+
+  useEffect(() => {
+    handleBlog();
+  }, []);
+
   return (
+   <>
+   <Header/>
     <div className="max-w-2xl mx-auto mt-8 p-4 overflow-y-auto">
-      <h1 className="text-4xl font-bold mb-4">{blogData.title}</h1>
-      <p className="text-sm text-gray-600">By {blogData.author}</p>
+      <h1 className="text-4xl font-bold mb-4">{apiPosts.title}</h1>
+      <p className="text-sm text-gray-600">By {session?.data?.user?.email}</p>
 
-      {blogData.images.map((image, index) => (
-        <img key={index} src={image} alt={`Image ${index}`} className="my-4 rounded-lg shadow-md" />
-      ))}
+      {/* {blogData.images.map((image, index) => ( */}
+        <img src={apiPosts?.imageUrl}  className="my-4 rounded-lg shadow-md" />
+      {/* ))} */}
 
-      <div className="text-lg mt-4" dangerouslySetInnerHTML={{ __html: blogData.content }} />
+      <p className="text-lg mt-4"  >{apiPosts?.content}</p>
 
       <div className="flex items-center mt-8">
         <button
@@ -79,6 +98,7 @@ const BlogDetail = (props) => {
       <CommentSection />
 
     </div>
+   </>
 
   );
 };

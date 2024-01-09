@@ -39,7 +39,7 @@ export default function WriteForm() {
         ? await convertImageToDataURL(selectedFile)
         : null;
 
-      const response = await axios.post("/api/write", {
+      const response = await axios.post(`/api/write?title=${title}`, {
         title,
         content,
         imageUrl: dataUrl,

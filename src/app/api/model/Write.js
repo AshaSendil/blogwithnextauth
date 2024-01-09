@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { Types } from "mongoose";
 
 const WriteSchema = new mongoose.Schema(
   {
@@ -9,13 +9,13 @@ const WriteSchema = new mongoose.Schema(
     content: {
       type: String,
       required: true,
-    },    
-    imageUrl:{
-        type:String,
-        required:false,
-    }
+    },
+    imageUrl: {
+      type: String,
+      required: false,
+    },
   },
   { timestamps: true }
 );
 
-export default mongoose.models.Write || mongoose.model('Write', WriteSchema);
+export default mongoose.models.Write || mongoose.model("Write", WriteSchema);
