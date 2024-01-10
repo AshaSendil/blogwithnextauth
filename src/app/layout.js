@@ -5,6 +5,8 @@ import Header from "./components/header/page";
 import Footer from "./components/footer/page";
 import { useEffect, useState } from "react";
 import NextAuthProvider from "../providers";
+import { ThemeSwitcher } from "./components/togglebutton/ThemeSwitcher";
+import { ThemeProvider } from "./theme-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -35,10 +37,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <ThemeSwitcher />
+
         <NextAuthProvider>
           <div className="max-h-screen">{children}</div>
           {/* <Footer /> */}
         </NextAuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
