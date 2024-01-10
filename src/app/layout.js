@@ -7,15 +7,18 @@ import { useEffect, useState } from "react";
 import NextAuthProvider from "../providers";
 import { ThemeSwitcher } from "./components/togglebutton/ThemeSwitcher";
 import { ThemeProvider } from "./theme-provider";
+import { Poppins } from "next/font/google";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Poppins({
+  weight: ["400", "700"],
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export default function RootLayout({
   children,
   params: { session, ...params },
 }) {
-  // const [isUrl, setIsUrl] = useState(false);
-
   // useEffect(() => {
   //   // Get the current URL
   //   const currentUrl = window?.location?.href;
@@ -28,22 +31,19 @@ export default function RootLayout({
   //     console.log(lastSegment === "login", "lastSegment");
   //     setIsUrl(lastSegment === "login");
 
-
   //   }
   // }, []);
-
-  
 
   return (
     <html lang="en">
       <body className={inter.className}>
-      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-      <ThemeSwitcher />
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <ThemeSwitcher />
 
-        <NextAuthProvider>
-          <div className="max-h-screen">{children}</div>
-          {/* <Footer /> */}
-        </NextAuthProvider>
+          <NextAuthProvider>
+            <div className="max-h-screen">{children}</div>
+            {/* <Footer /> */}
+          </NextAuthProvider>
         </ThemeProvider>
       </body>
     </html>
