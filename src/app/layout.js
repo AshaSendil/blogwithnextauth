@@ -39,9 +39,8 @@ export default function RootLayout({
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <ThemeSwitcher />
-
           <NextAuthProvider>
-            <div className="max-h-screen">{children}</div>
+            <div className="max-h-screen bg-primary-background">{children}</div>
             {/* <Footer /> */}
           </NextAuthProvider>
         </ThemeProvider>

@@ -76,7 +76,6 @@ const CommentSection = (props) => {
         <div className="mt-4">
           <h3 className="text-xl font-bold mb-2">Previous Comments</h3>
 
-          {console.log(session)}
           {getComment.map((comment, index) => (
             <div key={index} className="bg-gray-100 dark:bg-gray-500 p-5 my-5 rounded">
               <p>{comment.comment}</p>

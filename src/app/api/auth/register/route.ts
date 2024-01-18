@@ -5,13 +5,14 @@ import dbConnect from "../../../mongoose/dbconnect";
 import bcrypt from "bcrypt";
 
 export async function POST(request: Request) {
-  const { email, password } = await request.json();
+  const { username,email, password } = await request.json();
 
   await dbConnect();
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
   const newUser = new user({
+    username,
     email,
     password: hashedPassword,
   });

@@ -1,4 +1,3 @@
-"use client"
 import WriteForm from "./form"
 
 export default function Write() {

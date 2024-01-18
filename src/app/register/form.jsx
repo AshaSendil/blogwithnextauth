@@ -1,7 +1,10 @@
 "use client";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 export default function Form() {
+  const router = useRouter();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     let formData = new FormData(e.target);
@@ -10,6 +13,7 @@ export default function Form() {
       const response = await fetch(`api/auth/register`, {
         method: "POST",
         body: JSON.stringify({
+          username: formData.get("username"),
           email: formData.get("email"),
           password: formData.get("password"),
         }),
@@ -18,16 +22,34 @@ export default function Form() {
         },
       });
 
-      console.log(response, "respinse");
-      response.status === 200 && alert("Account has been created");
+      response.status === 200 && router.push("/login");
+      alert("Account has been created");
     } catch (err) {
-        alert(err);
+      alert(err);
     }
   };
 
   return (
     <>
       <form className="space-y-6" onSubmit={handleSubmit}>
+        <div>
+          <label
+            htmlFor="User Name"
+            className="block text-sm font-medium leading-6 text-gray-900"
+          >
+            Name
+          </label>
+          <div className="mt-2">
+            <input
+              id="username"
+              name="username"
+              type="username"
+              autoComplete="username"
+              required
+              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            />
+          </div>
+        </div>
         <div>
           <label
             htmlFor="email"

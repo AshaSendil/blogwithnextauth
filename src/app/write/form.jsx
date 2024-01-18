@@ -3,12 +3,14 @@ import axios from "axios";
 import React, { useState } from "react";
 import { FiImage } from 'react-icons/fi';
 import imageCompression from 'browser-image-compression';
+import { useSession } from "next-auth/react";
 
 
 export default function WriteForm() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
+  const session = useSession();
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -56,7 +58,9 @@ export default function WriteForm() {
     }
   };
 
+  console.log(session,"session")
   return (
+    
     <form
       onSubmit={handleSubmit}
       className="w-full max-w-md bg-blue-500 p-8 rounded-md"
